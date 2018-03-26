@@ -14,7 +14,7 @@
 #' @importFrom utils URLencode
 
 bx_search <- function(query, limit = 10){
-  base <- "http://www.biorxiv.org/search/"
+  base <- "https://www.biorxiv.org/search/"
   page <- "?page="
   URL <- paste(base,URLencode(query),page,"0",sep="") 
   pgRes <- htmlParse(URL)
@@ -38,7 +38,7 @@ bx_search <- function(query, limit = 10){
     lastPg <- as.numeric(strsplit(xmlGetAttr(pgCtLst[[lastIndex]],"href"),"=")[[1]][2])
   }
   ## Get first round of URL's 
-  ftURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="http://www.biorxiv.org/content/early",value=T))
+  ftURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="https://www.biorxiv.org/content/early",value=T))
   
   ### Adjust for limits
   
@@ -53,7 +53,7 @@ bx_search <- function(query, limit = 10){
       URL <- paste(base,URLencode(query),page,i,sep="") 
       pgRes <- htmlParse(URL)
       
-      tmpURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="http://www.biorxiv.org/content/early",value=T))
+      tmpURL <- unlist(lapply(xpathApply(pgRes, "//a[@class]",xmlGetAttr, "href"),grep,pattern="https://www.biorxiv.org/content/early",value=T))
       ftURL <- c(ftURL,tmpURL)
     }
   } 
